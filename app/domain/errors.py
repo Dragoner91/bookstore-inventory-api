@@ -1,14 +1,10 @@
-class DomainError(Exception):
-    """Error de negocio. La capa API lo traduce al status HTTP que corresponda."""
-
-
-class BookNotFound(DomainError):
+class BookNotFound(Exception):
     pass
 
 
-class DuplicateISBN(DomainError):
+class DuplicateISBN(Exception):
     pass
 
 
-class InvalidBookData(DomainError):
+class InvalidBookData(Exception):
     pass

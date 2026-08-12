@@ -4,6 +4,8 @@ from contextlib import asynccontextmanager
 import httpx
 from fastapi import FastAPI
 
+from app.api.books_router import router as books_router
+from app.api.exception_handlers import register_exception_handlers
 from app.infrastructure.database import create_tables, engine
 
 
@@ -24,6 +26,10 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
+
+register_exception_handlers(app)
+app.include_router(books_router, prefix="/books", tags=["Books"])
 
 
 @app.get("/")
