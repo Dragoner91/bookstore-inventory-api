@@ -1,0 +1,332 @@
+{
+  "info": {
+    "_postman_id": "8ee32acf-6639-4056-a463-4957284f9d49",
+    "name": "Prueba Tecnica Nextep Guillermo Gaudeano",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49985927",
+    "_collection_link": "https://go.postman.co/collection/49985927-8ee32acf-6639-4056-a463-4957284f9d49?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. Health check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Crear libro",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"El Quijote\",\n  \"author\": \"Miguel de Cervantes\",\n  \"isbn\": \"978-84-376-0494-7\",\n  \"cost_usd\": 15.99,\n  \"stock_quantity\": 25,\n  \"category\": \"Literatura Clasica\",\n  \"supplier_country\": \"ES\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Crear libro - ISBN duplicado (409)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Otro libro\",\n  \"author\": \"Otro autor\",\n  \"isbn\": \"978-84-376-0494-7\",\n  \"cost_usd\": 10.00,\n  \"stock_quantity\": 5,\n  \"category\": \"Literatura Clasica\",\n  \"supplier_country\": \"ES\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Crear libro - ISBN invalido (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Libro con ISBN malo\",\n  \"author\": \"Autor\",\n  \"isbn\": \"123\",\n  \"cost_usd\": 10.00,\n  \"stock_quantity\": 5,\n  \"category\": \"Tecnica\",\n  \"supplier_country\": \"US\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Crear libro - cost_usd negativo (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Libro con costo negativo\",\n  \"author\": \"Autor\",\n  \"isbn\": \"0306406152\",\n  \"cost_usd\": -5.00,\n  \"stock_quantity\": 5,\n  \"category\": \"Tecnica\",\n  \"supplier_country\": \"US\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Listar libros (paginado)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?limit=10&offset=0",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Obtener libro por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Obtener libro inexistente (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/999999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            "999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. Actualizar libro",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"stock_quantity\": 7\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. Buscar por categoria",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/search?category=Literatura Clasica",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "category",
+              "value": "Literatura Clasica"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11. Libros con stock bajo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/low-stock?threshold=10",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            "low-stock"
+          ],
+          "query": [
+            {
+              "key": "threshold",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "12. Calcular precio de venta",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/1/calculate-price",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            "1",
+            "calculate-price"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "13. Calcular precio de libro inexistente (404)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/999999/calculate-price",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            "999999",
+            "calculate-price"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "14. Eliminar libro",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://REEMPLAZAR.onrender.com"
+    }
+  ]
+}
