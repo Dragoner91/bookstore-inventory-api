@@ -1,0 +1,33 @@
+services:
+
+  # solo para desarrollo local, no para producción
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bookstore
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    # sin esperar el healthcheck, la api arranca antes que postgres y falla el
+    # create_all del lifespan
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/bookstore
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
