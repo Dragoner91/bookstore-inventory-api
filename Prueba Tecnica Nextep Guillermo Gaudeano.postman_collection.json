@@ -326,7 +326,7 @@
   "variable": [
     {
       "key": "base_url",
-      "value": "https://REEMPLAZAR.onrender.com"
+      "value": "https://bookstore-inventory-api-w36d.onrender.com"
     }
   ]
 }
